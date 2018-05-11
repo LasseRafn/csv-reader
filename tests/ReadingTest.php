@@ -22,4 +22,44 @@ class ReadingTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertCount( 9, $raw );
 	}
+
+	/** @test */
+	public function can_escape_characters() {
+		$raw = \LasseRafn\CsvReader\Reader::make( 'files/escaped-file.csv' )->getRaw();
+		var_dump( $raw );
+
+		$this->assertCount( 9, $raw );
+	}
+
+	/** @test */
+	public function will_not_trim_empty_lines() {
+		$raw = \LasseRafn\CsvReader\Reader::make( 'files/file-with-empty-lines.csv' )->getRaw();
+		var_dump( $raw );
+
+		$this->assertCount( 9, $raw );
+	}
+
+	/** @test */
+	public function will_throw_an_exception_if_content_is_invalid() {
+		$raw = \LasseRafn\CsvReader\Reader::make( 'files/file-with-empty-lines.csv' )->getRaw();
+		var_dump( $raw );
+
+		$this->assertCount( 9, $raw );
+	}
+
+	/** @test */
+	public function will_throw_an_exception_if_a_line_is_invalid() {
+		$raw = \LasseRafn\CsvReader\Reader::make( 'files/file-with-empty-lines.csv' )->getRaw();
+		var_dump( $raw );
+
+		$this->assertCount( 9, $raw );
+	}
+
+	/** @test */
+	public function can_toggle_skipping_invalid_lines_instead_of_throwing_exceptions() {
+		$raw = \LasseRafn\CsvReader\Reader::make( 'files/file-with-empty-lines.csv' )->getRaw();
+		var_dump( $raw );
+
+		$this->assertCount( 9, $raw );
+	}
 }

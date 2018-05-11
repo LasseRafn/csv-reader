@@ -16,7 +16,7 @@ class Reader
 	 *
 	 * @throws Exceptions\InvalidCSVException
 	 */
-	public function __construct( $content, $delimiter = null, $enclosure = '"', $escape = '\\' ) {
+	public function __construct( $content, $delimiter = null, $enclosure = "\"", $escape = "\\" ) {
 		$this->parser = new Parser( $content, $delimiter, $enclosure, $escape );
 		$this->raw = $this->parser->read();
 	}
@@ -35,7 +35,7 @@ class Reader
 	 *
 	 * @throws Exceptions\InvalidCSVException
 	 */
-	public static function make( $content, $delimiter = null, $enclosure = '"', $escape = '\\' ) {
+	public static function make( $content, $delimiter = null, $enclosure = "\"", $escape = "\\" ) {
 		return new self( $content, $delimiter, $enclosure, $escape );
 	}
 

@@ -8,9 +8,9 @@ class Parser
 
 	/** @var string|\SplFileObject */
 	protected $content   = '';
-	protected $delimiter = ',';
-	protected $enclosure = '"';
-	protected $escape    = '\\';
+	protected $delimiter = ",";
+	protected $enclosure = "\"";
+	protected $escape    = "\\";
 
 	/**
 	 * Parser constructor.
@@ -20,7 +20,7 @@ class Parser
 	 * @param string                $enclosure
 	 * @param string                $escape
 	 */
-	public function __construct( $content, $delimiter = null, $enclosure = '"', $escape = '\\' ) {
+	public function __construct( $content, $delimiter = null, $enclosure = "\"", $escape = "\\" ) {
 		$this->escape    = $escape;
 		$this->content   = $content;
 		$this->enclosure = $enclosure;
@@ -32,7 +32,7 @@ class Parser
 	 * @throws InvalidCSVException
 	 */
 	public function read() {
-		if ( $this->content instanceof \SplFileObject && $this->content->valid() ) {
+		if ( $this->content instanceof \SplFileObject ) {
 			return static::validate( $this->readFileObject() );
 		}
 
