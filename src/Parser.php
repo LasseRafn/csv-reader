@@ -41,7 +41,7 @@ class Parser
 		}
 
 		if ( \is_string( $this->content ) ) {
-			return static::validate( str_getcsv( $this->content, $this->delimiter, $this->enclosure, $this->escape ) );
+			return static::validate( $this->readString() );
 		}
 
 		throw new InvalidCSVException( 'The supplied content is not valid.' );
@@ -68,6 +68,15 @@ class Parser
 		return $data;
 	}
 
+	protected function readString() {
+		$data = [];
+
+		foreach ( str_getcsv( $this->content, "\n", $this->enclosure, $this->escape ) as $line ) {
+			$data[] = str_getcsv( $line, $this->delimiter, $this->enclosure, $this->escape );
+		}
+
+		return $data;
+	}
 
 	protected static function getRaw( $content ) {
 		if ( $content instanceof \SplFileObject ) {
