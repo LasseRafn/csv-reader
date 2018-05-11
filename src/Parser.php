@@ -32,7 +32,7 @@ class Parser
 	 * @throws InvalidCSVException
 	 */
 	public function read() {
-		if ( $this->content instanceof \SplFileObject ) {
+		if ( $this->content instanceof \SplFileObject && $this->content->valid() ) {
 			return static::validate( $this->readFileObject() );
 		}
 
@@ -48,10 +48,12 @@ class Parser
 	}
 
 	protected function readFileObject() {
+		$this->content->setFlags( \SplFileObject::READ_CSV | \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY );
+		$this->content = $this->content->openFile('rb');
 		$data = [];
 
-		while ( ! $this->content->eof() ) {
-			$data[] = $this->content->fgetcsv( $this->delimiter, $this->enclosure, $this->escape );
+		while ( $row = $this->content->fgetcsv( $this->delimiter, $this->enclosure, $this->escape ) ) {
+			$data[] = $row;
 		}
 
 		return $data;
