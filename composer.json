@@ -1,0 +1,25 @@
+{
+	"name": "lasserafn/csv-reader",
+	"description": "A proper CSV reader that fixes common issues with cross-platform CSV files.",
+	"type": "library",
+	"require": {
+		"php": ">=7.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^7.1",
+		"satooshi/php-coveralls": "^2.0"
+	},
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Lasse Rafn",
+			"email": "lasserafn@gmail.com"
+		}
+	],
+	"config": {
+		"sort-packages": true,
+		"platform": {
+			"php": "7.0"
+		}
+	}
+}
