@@ -6,10 +6,6 @@
 		"php": ">=7.0",
 		"league/csv": "^9.1"
 	},
-	"require-dev": {
-		"phpunit/phpunit": "^7.1",
-		"satooshi/php-coveralls": "^2.0"
-	},
 	"license": "MIT",
 	"authors": [
 		{
