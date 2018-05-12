@@ -3,7 +3,6 @@
 	"description": "A minimal League/CSV wrapper. Gives the powerful CSV tool an acceptable API. Very opinionated. Used for own projects, so might not fit your case. Just use League/csv.",
 	"type": "library",
 	"require": {
-		"php": ">=7.0",
 		"league/csv": "^9.1"
 	},
 	"license": "MIT",
@@ -14,10 +13,7 @@
 		}
 	],
 	"config": {
-		"sort-packages": true,
-		"platform": {
-			"php": "7.2"
-		}
+		"sort-packages": true
 	},
 	"autoload": {
 		"psr-4": {
