@@ -24,6 +24,10 @@ class Reader
 		}
 	}
 
+	public function getHeader() {
+		return $this->csv->getHeader();
+	}
+
 	public function setHeaderOffset( $offset = 0 ) {
 		$this->csv->setHeaderOffset( $offset );
 	}
@@ -36,7 +40,7 @@ class Reader
 		$items = [];
 
 		foreach ( $this->csv as $item ) {
-			$items[] = $item;
+			$items[] = array_map( 'trim', $item );
 		}
 
 		return $items;
