@@ -6,8 +6,21 @@ class Reader
 {
 	/** @var \Iterator|\League\Csv\Reader */
 	protected $csv;
-	protected const DELIMITERS = [ ',', '\t', ';', '|', ':' ];
 
+	protected const DELIMITERS          = [ ',', '\t', ';', '|', ':' ];
+	protected const SUPPORTED_ENCODINGS = [
+		'UTF-8', 'ASCII', 'ISO-8859-1', 'ISO-8859-2',
+		'ISO-8859-3', 'ISO-8859-4', 'ISO-8859-5', 'ISO-8859-6',
+		'ISO-8859-7', 'ISO-8859-8', 'ISO-8859-9', 'ISO-8859-10',
+		'ISO-8859-13', 'ISO-8859-14', 'ISO-8859-15', 'ISO-8859-16',
+		'Windows-1251', 'Windows-1252', 'Windows-1254',
+	];
+
+	/**
+	 * @param $document
+	 *
+	 * @throws \League\Csv\Exception
+	 */
 	public function __construct( $document ) {
 		if ( ! ini_get( 'auto_detect_line_endings' ) ) {
 			ini_set( 'auto_detect_line_endings', '1' );
@@ -24,18 +37,62 @@ class Reader
 		}
 	}
 
+	/**
+	 * Example: Convert from ISO-8859-1 to UTF-8
+	 *
+	 * @param        $from
+	 * @param string $to
+	 *
+	 * @return $this
+	 */
+	public function addCharsetConversion( $from, $to = 'utf-8' ) {
+		CharsetConverter::addTo( $this->csv, $from, $to );
+
+		return $this;
+	}
+
+	/**
+	 * Automatically encode the content.
+	 *
+	 * @param string $to
+	 *
+	 * @return $this
+	 */
+	public function autoEncode( $to = 'utf-8' ) {
+		return $this->addCharsetConversion(
+			mb_detect_encoding( mb_substr($this->csv->getContent(), 0, 1024), static::SUPPORTED_ENCODINGS ),
+			$to
+		);
+	}
+
+	/**
+	 * @return array|string[]
+	 */
 	public function getHeader() {
 		return $this->csv->getHeader();
 	}
 
+	/**
+	 * @param int $offset
+	 *
+	 * @throws \League\Csv\Exception
+	 */
 	public function setHeaderOffset( $offset = 0 ) {
 		$this->csv->setHeaderOffset( $offset );
 	}
 
+	/**
+	 * @param $document
+	 *
+	 * @return Reader
+	 */
 	public static function make( $document ) {
 		return new self( $document );
 	}
 
+	/**
+	 * @return array
+	 */
 	public function get() {
 		$items = [];
 
@@ -46,6 +103,11 @@ class Reader
 		return $items;
 	}
 
+	/**
+	 * @param $document
+	 *
+	 * @return \League\Csv\Reader
+	 */
 	protected static function initReader( $document ) {
 		if ( $document instanceof \SplFileObject ) {
 			return \League\Csv\Reader::createFromPath( $document );
@@ -62,6 +124,12 @@ class Reader
 		return \League\Csv\Reader::createFromString( $document );
 	}
 
+	/**
+	 * @param     $content
+	 * @param int $linesToCheck
+	 *
+	 * @return mixed
+	 */
 	protected static function delimiter( $content, $linesToCheck = 5 ) {
 		$results = [];
 		$lines   = preg_split( "/((\r?\n)|(\r\n?))/", $content );
