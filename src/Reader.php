@@ -60,7 +60,7 @@ class Reader
 	 */
 	public function autoEncode( $to = 'utf-8' ) {
 		return $this->addCharsetConversion(
-			mb_detect_encoding( mb_substr($this->csv->getContent(), 0, 1024), static::SUPPORTED_ENCODINGS ),
+			mb_detect_encoding( mb_substr( $this->csv->getContent(), 0, 1024 ), static::SUPPORTED_ENCODINGS ),
 			$to
 		);
 	}
@@ -101,6 +101,15 @@ class Reader
 		}
 
 		return $items;
+	}
+
+	/**
+	 * @param callable $callback
+	 */
+	public function stream( callable $callback ) {
+		foreach ( $this->csv as $item ) {
+			$callback( array_map( 'trim', $item ) );
+		}
 	}
 
 	/**
