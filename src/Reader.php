@@ -8,7 +8,7 @@ class Reader
 	/** @var \Iterator|\League\Csv\Reader */
 	protected $csv;
 
-	protected const DELIMITERS          = [ ',', '\t', ';', '|', ':' ];
+	protected const DELIMITERS          = [ ',', "\t", ';', '|', ':' ];
 	protected const SUPPORTED_ENCODINGS = [
 		'UTF-8',
 		'ASCII',
