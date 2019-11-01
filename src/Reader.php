@@ -128,6 +128,13 @@ class Reader
 	}
 
 	/**
+	 * @return \Iterator|\League\Csv\Reader
+	 */
+	public function getIterable() {
+		return $this->csv;
+	}
+
+	/**
 	 * @param $document
 	 *
 	 * @return \League\Csv\Reader
