@@ -8,7 +8,7 @@ class Reader
 	/** @var \Iterator|\League\Csv\Reader */
 	protected $csv;
 
-	protected const DELIMITERS          = [ ',', '\t', ';', '|', ':' ];
+	protected const DELIMITERS          = [ ',', "\t", ';', '|', ':' ];
 	protected const SUPPORTED_ENCODINGS = [
 		'UTF-8',
 		'ASCII',
@@ -42,8 +42,8 @@ class Reader
 		}
 
 		$this->csv = static::initReader( $document );
-		$this->csv->setDelimiter( $this->delimiter( $this->csv->getContent() ) );
-		$this->csv->setHeaderOffset( 0 );
+		$this->setDelimiter( $this->delimiter( $this->csv->getContent() ) );
+		$this->setHeaderOffset( 0 );
 
 		$input_bom = $this->csv->getInputBOM();
 
@@ -65,6 +65,19 @@ class Reader
 
 		return $this;
 	}
+	
+	/**
+	 * Set the delimiter
+	 *
+	 * @param string $delimiter
+	 *
+	 * @return $this
+	 */
+	public function setDelimiter($delimiter = ',') {
+		$this->csv->setDelimiter( $delimiter );
+		
+		return $this;
+	} 
 
 	/**
 	 * Automatically encode the content.
