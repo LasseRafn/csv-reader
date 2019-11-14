@@ -132,6 +132,17 @@ class Reader
 	}
 
 	/**
+	 * @param string $column
+	 *
+	 * @return array
+	 */
+	public function pluck($column) {
+		return array_map( function( $item ) use( $column ) {
+			return trim($item[$column] ?? '');
+		}, $this->csv );
+	}
+
+	/**
 	 * @param callable $callback
 	 */
 	public function stream( callable $callback ) {
