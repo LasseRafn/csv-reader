@@ -137,6 +137,11 @@ class Reader
 	 * @return array
 	 */
 	public function pluck($column) {
+		// If column does not exist, return empty array
+		if ( ! in_array( $column, $this->getHeader(), true ) ) {
+			return [];
+		}
+
 		return array_map( function( $item ) use( $column ) {
 			return trim($item[$column] ?? '');
 		}, $this->csv );
