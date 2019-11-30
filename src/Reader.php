@@ -189,7 +189,7 @@ class Reader
 	 *
 	 * @return mixed
 	 */
-	protected static function delimiter( $content, $linesToCheck = 5 ) {
+	public static function delimiter( $content, $linesToCheck = 5 ) {
 		$results = [];
 		$lines   = preg_split( "/((\r?\n)|(\r\n?))/", $content );
 
