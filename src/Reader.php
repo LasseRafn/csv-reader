@@ -216,6 +216,11 @@ class Reader
 			$i++;
 		}
 
+		// Default to first delimiter available
+		if ( \count( $results ) === 0 ) {
+			return static::DELIMITERS[0];
+		}
+
 		$results = array_keys( $results, max( $results ) );
 
 		return $results[0];
