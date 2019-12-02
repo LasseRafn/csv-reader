@@ -132,19 +132,27 @@ class Reader
 	}
 
 	/**
+	 * Get list of unique values from column
+	 * 
 	 * @param string $column
 	 *
 	 * @return array
 	 */
-	public function pluck($column) {
+	public function pluck( $column ) {
 		// If column does not exist, return empty array
 		if ( ! in_array( $column, $this->getHeader(), true ) ) {
 			return [];
 		}
 
-		return array_map( function( $item ) use( $column ) {
-			return trim($item[$column] ?? '');
-		}, $this->csv );
+		$unique = [];
+
+		foreach ( $this->csv as $item ) {
+			if ( array_key_exists( $column, $item ) && ! in_array( $item[ $column ], $unique ) ) {
+				$unique[] = $item[ $column ] ?? '';
+			}
+		}
+
+		return $unique;
 	}
 
 	/**
