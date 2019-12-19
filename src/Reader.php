@@ -8,8 +8,9 @@ class Reader
 	/** @var \Iterator|\League\Csv\Reader */
 	protected $csv;
 
-	protected const DELIMITERS          = [ ',', "\t", ';', '|', ':' ];
-	protected const SUPPORTED_ENCODINGS = [
+	protected const DELIMITERS = [ ',', "\t", ';', '|', ':' ];
+
+	public const SUPPORTED_ENCODINGS = [
 		'UTF-8',
 		'ASCII',
 		'ISO-8859-1',
@@ -26,6 +27,13 @@ class Reader
 		'ISO-8859-14',
 		'ISO-8859-15',
 		'ISO-8859-16',
+		'Windows-1251',
+		'Windows-1252',
+		'Windows-1254',
+	];
+
+	public const EXCEL_ENCODINGS = [
+		'UTF-8',
 		'Windows-1251',
 		'Windows-1252',
 		'Windows-1254',
@@ -65,7 +73,7 @@ class Reader
 
 		return $this;
 	}
-	
+
 	/**
 	 * Set the delimiter
 	 *
@@ -73,22 +81,23 @@ class Reader
 	 *
 	 * @return $this
 	 */
-	public function setDelimiter($delimiter = ',') {
+	public function setDelimiter( $delimiter = ',' ) {
 		$this->csv->setDelimiter( $delimiter );
-		
+
 		return $this;
-	} 
+	}
 
 	/**
 	 * Automatically encode the content.
 	 *
 	 * @param string $to
+	 * @param null|array $encodings
 	 *
 	 * @return $this
 	 */
-	public function autoEncode( $to = 'utf-8' ) {
+	public function autoEncode( $to = 'utf-8', $encodings = null ) {
 		return $this->addCharsetConversion(
-			mb_detect_encoding( mb_substr( $this->csv->getContent(), 0, 1024 ), static::SUPPORTED_ENCODINGS ),
+			mb_detect_encoding( mb_substr( $this->csv->getContent(), 0, 1024 ), $encodings ?? static::SUPPORTED_ENCODINGS ),
 			$to
 		);
 	}
@@ -133,7 +142,7 @@ class Reader
 
 	/**
 	 * Get list of unique values from column
-	 * 
+	 *
 	 * @param string $column
 	 *
 	 * @return array
@@ -148,7 +157,7 @@ class Reader
 
 		foreach ( $this->csv as $item ) {
 			if ( array_key_exists( $column, $item ) && ! in_array( $item[ $column ], $unique ) ) {
-				$unique[] = trim($item[ $column ] ?? null);
+				$unique[] = trim( $item[ $column ] ?? null );
 			}
 		}
 
