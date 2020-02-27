@@ -160,7 +160,7 @@ class Reader
 		$unique = [];
 
 		foreach ( $this->csv as $item ) {
-			if ( array_key_exists( $column, $item ) && ! in_array( $item[ $column ], $unique ) ) {
+			if ( array_key_exists( $column, $item ) && ! in_array( $item[ $column ], $unique, true ) ) {
 				$unique[] = trim( $item[ $column ] ?? null );
 			}
 		}
