@@ -43,6 +43,7 @@ class Reader
 	 * @param $document
 	 *
 	 * @throws \League\Csv\Exception
+	 * @throws InvalidCSVException
 	 */
 	public function __construct( $document ) {
 		if ( ! ini_get( 'auto_detect_line_endings' ) ) {
@@ -75,11 +76,12 @@ class Reader
 	}
 
 	/**
-	 * Set the delimiter
+	 * Set the delimiter used to separate columns.
 	 *
 	 * @param string $delimiter
 	 *
 	 * @return $this
+	 * @throws \League\Csv\Exception
 	 */
 	public function setDelimiter( $delimiter = ',' ) {
 		$this->csv->setDelimiter( $delimiter );
@@ -90,7 +92,7 @@ class Reader
 	/**
 	 * Automatically encode the content.
 	 *
-	 * @param string $to
+	 * @param string     $to
 	 * @param null|array $encodings
 	 *
 	 * @return $this
@@ -122,6 +124,8 @@ class Reader
 	 * @param $document
 	 *
 	 * @return Reader
+	 * @throws \League\Csv\Exception
+	 * @throws InvalidCSVException
 	 */
 	public static function make( $document ) {
 		return new self( $document );
@@ -184,6 +188,7 @@ class Reader
 	 * @param $document
 	 *
 	 * @return \League\Csv\Reader
+	 * @throws InvalidCSVException
 	 */
 	protected static function initReader( $document ) {
 		if ( $document === null ) {
