@@ -23,7 +23,10 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"CsvReader\\Tests\\": "tests/"
+			"LasseRafn\\CsvReader\\Tests\\": "tests/"
 		}
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.0"
 	}
 }

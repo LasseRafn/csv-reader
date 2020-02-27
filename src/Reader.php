@@ -10,6 +10,11 @@ class Reader
 
 	protected const DELIMITERS = [ ',', "\t", ';', '|', ':' ];
 
+	protected $_STRIPPING = [
+		'non_unique' => '__NON_UNIQUE__:',
+		'empty'      => '__EMPTY__:',
+	];
+
 	public const SUPPORTED_ENCODINGS = [
 		'UTF-8',
 		'ASCII',
@@ -105,19 +110,62 @@ class Reader
 	}
 
 	/**
+	 * Gets an array of the headers / columns of the file.
+	 * It strips duplicate and empty headers.
+	 *
 	 * @return array|string[]
 	 */
-	public function getHeader() {
-		return $this->csv->getHeader();
+	public function getHeader(): array {
+		$headers     = array_filter( array_map( 'trim', $this->csv->getHeader() ) );
+		$usedHeaders = [];
+
+		$headers = array_filter( $headers, function ( $header ) use ( &$usedHeaders ) {
+			if ( in_array( $header, $usedHeaders, true ) ) {
+				return false;
+			}
+
+			$usedHeaders[] = $header;
+
+			return true;
+		} );
+
+		return array_values( $headers );
+	}
+
+	/**
+	 *
+	 * @return array|string[]
+	 */
+	protected function getAllHeaders(): array {
+		$trimmedHeader = array_map( 'trim', $this->csv->getHeader() );
+		$usedHeaders   = [];
+
+		return array_map( function ( $header, $index ) use ( &$usedHeaders ) {
+			// Avoid empty headers
+			if ( $header === '' ) {
+				return $this->_STRIPPING['empty'] . $index;
+			}
+
+			// Avoid duplicates
+			if ( in_array( $header, $usedHeaders, true ) ) {
+				return $this->_STRIPPING['non_unique'] . $index;
+			}
+			$usedHeaders[] = $header;
+
+			return $header;
+		}, $trimmedHeader, array_keys( $trimmedHeader ) );
 	}
 
 	/**
 	 * @param int $offset
 	 *
+	 * @return Reader
 	 * @throws \League\Csv\Exception
 	 */
 	public function setHeaderOffset( $offset = 0 ) {
 		$this->csv->setHeaderOffset( $offset );
+
+		return $this;
 	}
 
 	/**
@@ -137,8 +185,8 @@ class Reader
 	public function get() {
 		$items = [];
 
-		foreach ( $this->csv as $item ) {
-			$items[] = array_map( 'trim', $item );
+		foreach ( $this->getIterable() as $item ) {
+			$items[] = $this->filterRow( array_map( 'trim', $item ) );
 		}
 
 		return $items;
@@ -159,7 +207,7 @@ class Reader
 
 		$unique = [];
 
-		foreach ( $this->csv as $item ) {
+		foreach ( $this->getIterable() as $item ) {
 			if ( array_key_exists( $column, $item ) && ! in_array( $item[ $column ], $unique, true ) ) {
 				$unique[] = trim( $item[ $column ] ?? null );
 			}
@@ -172,8 +220,8 @@ class Reader
 	 * @param callable $callback
 	 */
 	public function stream( callable $callback ) {
-		foreach ( $this->csv as $item ) {
-			$callback( array_map( 'trim', $item ) );
+		foreach ( $this->getIterable() as $item ) {
+			$callback( $this->filterRow( array_map( 'trim', $item ) ) );
 		}
 	}
 
@@ -181,7 +229,7 @@ class Reader
 	 * @return \Iterator|\League\Csv\Reader
 	 */
 	public function getIterable() {
-		return $this->csv;
+		return $this->csv->getRecords( $this->getAllHeaders() );
 	}
 
 	/**
@@ -246,5 +294,12 @@ class Reader
 		$results = array_keys( $results, max( $results ) );
 
 		return $results[0];
+	}
+
+	protected function filterRow( $row ) {
+		return array_filter( $row, function ( $rowColumnKey ) {
+			return strpos( $rowColumnKey, $this->_STRIPPING['empty'] ) === false
+			       && strpos( $rowColumnKey, $this->_STRIPPING['non_unique'] ) === false;
+		}, ARRAY_FILTER_USE_KEY );
 	}
 }
