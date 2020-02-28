@@ -37,6 +37,11 @@ class WhitespaceHeaderTest extends TestCase
 		], $this->reader->get() );
 	}
 
+	public function testCount() {
+		$this->assertCount( 2, $this->reader->get() );
+		$this->assertEquals( 2, $this->reader->count() );
+	}
+
 	public function testPluckValidColumn() {
 		$this->assertCount( 2, $this->reader->pluck('name') );
 		$this->assertEquals( [

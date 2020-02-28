@@ -250,7 +250,7 @@ class Reader
 	 * @return int
 	 */
 	public function count() {
-		return $this->csv->count();
+		return iterator_count( $this->getIterable() );
 	}
 
 	/**
