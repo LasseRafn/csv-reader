@@ -247,6 +247,13 @@ class Reader
 	}
 
 	/**
+	 * @return int
+	 */
+	public function count() {
+		return $this->csv->count();
+	}
+
+	/**
 	 * @param $document
 	 *
 	 * @return \League\Csv\Reader
