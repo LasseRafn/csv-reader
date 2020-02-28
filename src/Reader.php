@@ -226,10 +226,24 @@ class Reader
 	}
 
 	/**
-	 * @return \Iterator|\League\Csv\Reader
+	 * @return \Iterator
 	 */
 	public function getIterable() {
 		return $this->csv->getRecords( $this->getAllHeaders() );
+	}
+
+	/**
+	 * @return \Iterator|\League\Csv\Reader
+	 */
+	public function getCsv() {
+		return $this->csv;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getContent() {
+		return $this->csv->getContent();
 	}
 
 	/**
