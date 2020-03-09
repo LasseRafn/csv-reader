@@ -272,7 +272,7 @@ class Reader
 			return \League\Csv\Reader::createFromStream( $document );
 		}
 
-		if ( file_exists( $document ) ) {
+		if ( @file_exists( $document ) ) {
 			return \League\Csv\Reader::createFromPath( $document );
 		}
 
