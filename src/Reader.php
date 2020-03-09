@@ -264,16 +264,12 @@ class Reader
 			throw new InvalidCSVException( 'No document specified' );
 		}
 
-		if ( $document instanceof \SplFileObject ) {
+		if ( $document instanceof \SplFileObject || @file_exists( $document ) ) {
 			return \League\Csv\Reader::createFromPath( $document );
 		}
 
 		if ( \is_resource( $document ) ) {
 			return \League\Csv\Reader::createFromStream( $document );
-		}
-
-		if ( @file_exists( $document ) ) {
-			return \League\Csv\Reader::createFromPath( $document );
 		}
 
 		return \League\Csv\Reader::createFromString( $document );
