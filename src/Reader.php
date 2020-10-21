@@ -176,7 +176,7 @@ class Reader
 	 * @throws InvalidCSVException
 	 */
 	public static function make( $document ) {
-		return new self( $document );
+		return new static( $document );
 	}
 
 	/**
