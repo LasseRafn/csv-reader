@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: 7.4
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, mysql, intl, gd, exif, iconv, imagick
+        coverage: pcov
     - uses: actions/checkout@v3
 
     - name: Validate composer.json and composer.lock
@@ -29,7 +34,7 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run tests
-      run: vendor/bin/phpunit --coverage-clover=build.xml
+      run: php -d pcov.enabled=1 -d memory_limit=4G vendor/phpunit/phpunit/phpunit --coverage-clover=build/logs/clover.xml tests
       
     - name: Upload Coverage to Cotter
-      run: curl -F clover=@build.xml -F dir="/Users/lasserafn/dev-projects/rackbeat-shopify" https://testhehe.requestcatcher.com/test
+      run: curl -F clover=@build/logs/clover.xml -F dir="/Users/lasserafn/dev-projects/rackbeat-shopify" https://testhehe.requestcatcher.com/test
