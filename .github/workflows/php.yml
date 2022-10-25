@@ -1,4 +1,4 @@
-name: TEST
+name: Test Suite
 
 on: pull_request
 
