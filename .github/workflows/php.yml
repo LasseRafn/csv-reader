@@ -1,4 +1,4 @@
-name: PHP Composer
+name: TEST
 
 on: pull_request
 
