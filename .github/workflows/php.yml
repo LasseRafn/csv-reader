@@ -43,7 +43,8 @@ jobs:
       
     - name: Upload Coverage to Cotter
       run: |
-        curl -F clover=@build/logs/clover.xml -F repo_token=ABC123 \
+        curl -F clover=@build/logs/clover.xml \
+        -F repo_token=9d88534a-eeb3-4706-946c-842f94bb4f37 \
         -F github_token=${{ secrets.GITHUB_TOKEN }} \
         -F github_repo=${{ github.repository }} \
         -F github_base_commit=${{github.event.pull_request.base.sha}} \
