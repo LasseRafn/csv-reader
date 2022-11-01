@@ -48,7 +48,7 @@ jobs:
         -F github_token=${{ secrets.GITHUB_TOKEN }} \
         -F github_repo=${{ github.repository }} \
         -F github_sha=${{ github.sha }} \
-        -F github_pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH") 
+        -F github_pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH") \
         -F github_head_commit=${{github.event.pull_request.head.sha}} \
         -F github_head_branch=${{github.event.pull_request.head.ref}} \
         -F github_base_commit=${{github.event.pull_request.base.sha}} \
