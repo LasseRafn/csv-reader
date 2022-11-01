@@ -36,11 +36,6 @@ jobs:
     - name: Run tests
       run: php -d pcov.enabled=1 -d memory_limit=4G vendor/phpunit/phpunit/phpunit --coverage-clover=build/logs/clover.xml tests
       
-    - uses: mdecoleman/pr-branch-name@1.2.0
-      id: vars
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-      
     - name: Upload Coverage to Cotter
       run: |
         curl -F clover=@build/logs/clover.xml \
