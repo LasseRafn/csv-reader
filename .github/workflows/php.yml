@@ -49,4 +49,4 @@ jobs:
         -F github_base_commit=${{github.event.pull_request.base.sha}} \
         -F github_base_branch=${{github.event.pull_request.base.ref}} \
         -F base_dir="/home/runner/work/" \
-        http://vr8pyyobzw.laravel-sail.site:8080/ingress/upload
+        http://ihs8ashf4v.laravel-sail.site:8080/ingress/upload
