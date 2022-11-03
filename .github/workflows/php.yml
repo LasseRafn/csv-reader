@@ -48,5 +48,5 @@ jobs:
         -F github_head_branch=${{github.event.pull_request.head.ref}} \
         -F github_base_commit=${{github.event.pull_request.base.sha}} \
         -F github_base_branch=${{github.event.pull_request.base.ref}} \
-        -F base_dir=pwd \
+        -F base_dir=$(pwd) \
         http://szyh19o5zz.laravel-sail.site:8080/ingress/upload
