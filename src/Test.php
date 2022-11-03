@@ -4,5 +4,7 @@
 class Test
 {
 
-public function a(){}
+  public function a(){
+    echo 'a';
+  }
 }
