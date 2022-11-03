@@ -43,6 +43,8 @@ class Reader
 		'Windows-1252',
 		'Windows-1254',
 	];
+	
+	public int $a = 0;
 
 	/**
 	 * @param $document
@@ -61,7 +63,7 @@ class Reader
 
 		$input_bom = $this->csv->getInputBOM();
 		
-		// test
+		$this->a = 1;
 
 		if ( $input_bom === \League\Csv\Reader::BOM_UTF16_LE || $input_bom === \League\Csv\Reader::BOM_UTF16_BE ) {
 			CharsetConverter::addTo( $this->csv, 'utf-16', 'utf-8' );
