@@ -1,4 +1,4 @@
-name: Test Suites
+name: Testing
 
 on: 
   - pull_request
