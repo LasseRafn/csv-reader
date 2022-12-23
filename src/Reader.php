@@ -250,7 +250,7 @@ class Reader
 	 * @return int
 	 */
 	public function count() {
-		return iterator_count( $this->getIterable() );
+		return (int) iterator_count( $this->getIterable() );
 	}
 
 	/**
