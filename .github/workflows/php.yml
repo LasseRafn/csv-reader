@@ -1,8 +1,7 @@
-name: Testing
+name: Tests
 
 on: 
   - pull_request
-  - push
 
 permissions:
   contents: read
