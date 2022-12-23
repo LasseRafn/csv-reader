@@ -243,7 +243,7 @@ class Reader
 	 * @return string
 	 */
 	public function getContent() {
-		(string) return $this->csv->getContent();
+		return (string) $this->csv->getContent();
 	}
 
 	/**
