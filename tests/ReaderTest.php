@@ -52,6 +52,11 @@ class ReaderTest extends TestCase
 		$this->assertCount( 0, $this->reader->pluck( 'some column that does not exist' ) );
 		$this->assertEquals( [], $this->reader->pluck( 'some column that does not exist' ) );
 	}
+	
+	public function testMake() {
+		$this->reader = Reader::make( __DIR__ . '/stubs/valid-semicolon-file.csv' );
+		$this->assertCount( 3, $this->reader->get() );
+	}
 
 	public function setUp(): void {
 		parent::setUp();
