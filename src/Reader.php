@@ -57,8 +57,6 @@ class Reader
 
 		if(true) {
 			echo 'a';
-		} else {
-			echo 'c';
 		}
 
 		$this->csv = static::initReader( $document );
