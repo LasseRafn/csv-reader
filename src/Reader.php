@@ -57,8 +57,6 @@ class Reader
 
 		if(true) {
 			echo 'a';
-		} elseif(true === false) {
-			echo 'b';
 		} else {
 			echo 'c';
 		}
