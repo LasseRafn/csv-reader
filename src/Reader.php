@@ -55,10 +55,6 @@ class Reader
 			ini_set( 'auto_detect_line_endings', '1' );
 		}
 
-		if(true) {
-			echo 'a';
-		}
-
 		$this->csv = static::initReader( $document );
 		$this->setDelimiter( $this->delimiter( $this->csv->getContent() ) );
 		$this->setHeaderOffset( 0 );
