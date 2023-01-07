@@ -16,7 +16,7 @@ jobs:
       with:
         php-version: 7.4
         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, mysql, intl, gd, exif, iconv, imagick
-        coverage: pcov
+        coverage: xdebug
     - uses: actions/checkout@v3
 
     - name: Validate composer.json and composer.lock
@@ -35,7 +35,7 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run tests
-      run: php -d pcov.enabled=1 -d memory_limit=4G vendor/bin/phpunit --path-coverage --coverage-clover=build/logs/clover.xml tests
+      run: php -d xdebug.profiler_enable=on -d memory_limit=4G vendor/bin/phpunit --path-coverage --coverage-clover=build/logs/clover.xml tests
       
     - name: debug
       run: cat build/logs/clover.xml
