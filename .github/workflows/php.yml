@@ -18,6 +18,8 @@ jobs:
         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, mysql, intl, gd, exif, iconv, imagick
         coverage: pcov
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 2
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
