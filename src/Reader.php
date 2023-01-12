@@ -243,14 +243,14 @@ class Reader
 	 * @return string
 	 */
 	public function getContent() {
-		return $this->csv->getContent();
+		return (string) $this->csv->getContent();
 	}
 
 	/**
 	 * @return int
 	 */
 	public function count() {
-		return iterator_count( $this->getIterable() );
+		return (int) iterator_count( $this->getIterable() );
 	}
 
 	/**
