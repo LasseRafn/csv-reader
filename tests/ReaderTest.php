@@ -63,7 +63,7 @@ class ReaderTest extends TestCase
 	}
 	
 	public function testSomethingCool() {
-		$this->reader->doSomethingCool();
+		$this->assertTrue($this->reader->doSomethingCool());
 	}
 
 	public function setUp(): void {
