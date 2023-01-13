@@ -240,6 +240,7 @@ class Reader
 	}
 	
 	public function doSomethingCool() {
+		// Add a comment to test patch coverage
 		return true;
 	}
 
