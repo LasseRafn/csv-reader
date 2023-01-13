@@ -61,6 +61,10 @@ class ReaderTest extends TestCase
 	public function testGetContent() {
 		$this->assertEquals( file_get_contents(__DIR__ . '/stubs/valid-semicolon-file.csv'), $this->reader->getContent() );
 	}
+	
+	public function testSomethingCool() {
+		$this->reader->doSomethingCool();
+	}
 
 	public function setUp(): void {
 		parent::setUp();
