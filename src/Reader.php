@@ -240,7 +240,7 @@ class Reader
 	}
 	
 	public function doSomethingCool() {
-		echo 'cool';
+		return true;
 	}
 
 	/**
