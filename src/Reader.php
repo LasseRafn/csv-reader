@@ -238,6 +238,10 @@ class Reader
 	public function getCsv() {
 		return $this->csv;
 	}
+	
+	public function doSomethingCool() {
+		echo 'cool';
+	}
 
 	/**
 	 * @return string
