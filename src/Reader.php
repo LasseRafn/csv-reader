@@ -241,6 +241,8 @@ class Reader
 	
 	public function doSomethingCool() {
 		// Add a comment to test patch coverage
+		if(1 === 2) {return 1;} elseif(2===2) { return 2;} else { return null;}		
+		
 		return true;
 	}
 
