@@ -31,12 +31,14 @@ class DuplicateHeaderTest extends TestCase
             'name',
             'is_admin',
         ], $this->reader->getHeader());
+        //
     }
 
     public function testGet()
     {
         $this->assertCount(2, $this->reader->get());
-        $this->assertEquals([
+        $this->assertEquals(
+        [
             ['id' => '1', 'name' => 'John', 'is_admin' => '1'],
             ['id' => '2', 'name' => 'Francis', 'is_admin' => '1'],
         ], $this->reader->get());
