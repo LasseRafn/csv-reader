@@ -1,6 +1,4 @@
-<?php
-
-namespace LasseRafn\CsvReader\Exceptions;
+<?php namespace LasseRafn\CsvReader\Exceptions;
 
 class InvalidCSVException extends \Exception
 {
