@@ -38,10 +38,12 @@ class DuplicateHeaderTest extends TestCase
     {
         $this->assertCount(2, $this->reader->get());
         $this->assertEquals(
-        [
-            ['id' => '1', 'name' => 'John', 'is_admin' => '1'],
-            ['id' => '2', 'name' => 'Francis', 'is_admin' => '1'],
-        ], $this->reader->get());
+            [
+                ['id' => '1', 'name' => 'John', 'is_admin' => '1'],
+                ['id' => '2', 'name' => 'Francis', 'is_admin' => '1'],
+            ],
+            $this->reader->get()
+        );
     }
 
     public function testPluckValidColumn()
